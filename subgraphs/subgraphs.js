@@ -6,8 +6,10 @@ import express from 'express';
 import http from 'http';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import { addMocksToSchema } from '@graphql-tools/mock';
 import { getUsersSchema, getUsersDataSources } from './users/subgraph.js';
-import { addMocksToSchema } from "@graphql-tools/mock";
+import { getCommentsDataSources, getCommentsSchema } from './comments/subgraph.js';
+import { getPostsDataSources, getPostsSchema } from './posts/subgraph.js';
 
 /**
  * This is a handy way to run a bunch of subgraphs in a monolith.
@@ -15,6 +17,18 @@ import { addMocksToSchema } from "@graphql-tools/mock";
  * Apollo Server instance is started below
  */
 export const LOCAL_SUBGRAPH_CONFIG = [
+    {
+        name: 'comments',
+        getSchema: getCommentsSchema,
+        dataSources: getCommentsDataSources,
+        mock: false
+    },
+    {
+        name: 'posts',
+        getSchema: getPostsSchema,
+        dataSources: getPostsDataSources,
+        mock: false
+    },
     {
         name: 'users',
         getSchema: getUsersSchema,

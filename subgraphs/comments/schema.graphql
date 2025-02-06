@@ -1,0 +1,19 @@
+# noinspection GraphQLTypeRedefinition
+
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.9", import: ["@key"])
+
+type Query {
+  allComments: [Comment]
+}
+
+type Comment @key(fields: "id") {
+  id: ID!
+  name: String!
+  username: String
+  post: Post
+}
+
+type Post @key(fields: "id", resolvable: false) {
+  id: ID!
+}
