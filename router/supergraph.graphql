@@ -21,15 +21,6 @@ directive @join__unionMember(graph: join__Graph!, member: String!) repeatable on
 
 directive @link(url: String, as: String, for: link__Purpose, import: [link__Import]) repeatable on SCHEMA
 
-type Comment
-  @join__type(graph: SUBGRAPH)
-{
-  id: ID!
-  name: String!
-  body: String
-  post: Post
-}
-
 input join__ContextArgument {
   name: String!
   type: String!
@@ -44,7 +35,7 @@ scalar join__FieldSet
 scalar join__FieldValue
 
 enum join__Graph {
-  SUBGRAPH @join__graph(name: "subgraph", url: "http://localhost:4001")
+  USERS @join__graph(name: "users", url: "http://localhost:4001/users/graphql")
 }
 
 scalar link__Import
@@ -61,25 +52,14 @@ enum link__Purpose {
   EXECUTION
 }
 
-type Post
-  @join__type(graph: SUBGRAPH)
-{
-  id: ID!
-  title: String!
-  body: String
-  user: User
-}
-
 type Query
-  @join__type(graph: SUBGRAPH)
+  @join__type(graph: USERS)
 {
-  allPosts: [Post]
   allUsers: [User]
-  allComments: [Comment]
 }
 
 type User
-  @join__type(graph: SUBGRAPH)
+  @join__type(graph: USERS, key: "id")
 {
   id: ID!
   email: String!

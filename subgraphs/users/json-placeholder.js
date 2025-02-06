@@ -23,11 +23,13 @@ export class JSONPlaceholderAPI extends RESTDataSource {
         }));
     }
 
-    async getUser(id) {
+    async getUser(id, context) {
+        console.log('Datasource contenxt', context);
         return this.get(`users/${encodeURIComponent(id)}`);
     }
 
-    async listUsers() {
+    // Pass in the context to resolve any cache data
+    async listUsers(context) {
         return this.get(`users`);
     }
 
